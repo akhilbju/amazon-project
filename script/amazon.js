@@ -77,6 +77,11 @@ forEach((button) =>{
         })
 
        } 
-       console.log(cart);
+       let cartQuantity=0;
+       cart.forEach((item) =>{
+        cartQuantity+=item.quatity;
+       });
+       document.querySelector('.js-cart-quantity').innerHTML=cartQuantity;
+       
      }) 
 });
