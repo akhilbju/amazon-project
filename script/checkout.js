@@ -1,7 +1,21 @@
 import {cart, deleteFromCart} from "../data/cart.js"
 import { products } from "../data/products.js";
 
+function upDateCartQuantity(){
+  let cartQuantity=0;
+  cart.forEach((item) =>{
+   cartQuantity+=item.quatity;
+  });
+  document.querySelector('.js-items-show').innerHTML=`${cartQuantity} items`; 
+  
+}
+
+upDateCartQuantity();
+
+
 let cartShowHTML  = '';
+
+
 cart.forEach((cartItem,index) => {
 
     const productId = cartItem.productId;
@@ -36,7 +50,7 @@ cart.forEach((cartItem,index) => {
                   <span>
                     Quantity: <span class="quantity-label">${cartItem.quatity}
                   </span>
-                  <span class="update-quantity-link link-primary">
+                  <span class="update-quantity-link link-primary js-update">
                     Update
                   </span>
                   <span class="delete-quantity-link link-primary 
@@ -91,7 +105,8 @@ cart.forEach((cartItem,index) => {
                 </div> 
               </div>
             </div>
-          </div>`
+          </div>
+          `
 
 });
 
@@ -103,8 +118,24 @@ document.querySelectorAll('.js-delete-link')
     deleteFromCart(productId);
     const container = document.querySelector(`.js-cart-item-container-${productId}`);
     container.remove();
+    upDateCartQuantity();
 
 
+  });
+
+});
+
+
+function Update(){
+document.querySelector('.js-update').innerHTML =
+`<input> <button>save</button>`;
+}
+
+document.querySelectorAll('.js-update').
+forEach((update) =>{
+  update.addEventListener("click", ()=>{
+    document.querySelector('.js-update').innerHTML =
+    `<input> <button>save</button>`;
   });
 
 });

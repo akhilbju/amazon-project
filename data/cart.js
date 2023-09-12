@@ -1,20 +1,12 @@
 export let cart = JSON.parse(localStorage.getItem('cart'));
   
 
-if(!cart){
-    cart = [{
-        productId : "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-        quatity : 2
-    }
-    ]; 
-}
-
 
 function saveToStorage(){
     localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-export function addToCart(productId){
+export function addToCart(productId,quantityValue){
     let matchingItem;
   
     cart.forEach((item)=>{
@@ -25,11 +17,11 @@ export function addToCart(productId){
   
   
     if(matchingItem){
-     matchingItem.quatity+=1;
+     matchingItem.quatity += quantityValue;
     }else{
      cart.push({
          productId : productId,
-         quatity : 1
+         quatity : quantityValue
      });
   
     } 
@@ -48,3 +40,4 @@ export function addToCart(productId){
     
 
   }
+
