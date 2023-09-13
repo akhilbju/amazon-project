@@ -1,6 +1,53 @@
 import {cart, deleteFromCart} from "../data/cart.js"
 import { products } from "../data/products.js";
 
+
+
+function summary(){
+  let productsPrice = 0
+  let productsQuantity = 0;
+  cart.forEach((items) =>{
+
+    productsQuantity += items.quatity;
+    let ProductID = items.productId;
+  
+    products.forEach((product) =>{
+      if(ProductID === product.id){
+        productsPrice += productsQuantity*product.priceCents;
+      }
+    });
+  });
+  let product = document.querySelector('.js-items-row');
+  let payment = document.querySelector('.js-payment-summary'); 
+  let shipping = document.querySelector('.js-shipping');
+  let taxShow = document.querySelector('.js-payment-summary-tax');
+  let total = document.querySelector('.js-total');
+  let beforeTaxshow = document.querySelector('.js-before-tax');
+  let shippingcharge;
+  
+ 
+
+  if((productsPrice/100)<20){
+    shippingcharge = 0;
+  }else{
+    shippingcharge = 4.99;
+  }
+  
+  let beforeTax = ((productsPrice/100) + shippingcharge);
+  let tax = (beforeTax*.1);
+  let totalPrice = tax+beforeTax;
+
+  shipping.innerHTML = `$${shippingcharge}`;
+  payment.innerHTML = `$${(productsPrice/100).toFixed(2)}`
+  product.innerHTML = `Items (${productsQuantity}):`
+  beforeTaxshow.innerHTML = `$${(beforeTax).toFixed(2)}`;
+  taxShow.innerHTML = `$${(tax).toFixed(2)}`
+  total.innerHTML = `$${(totalPrice).toFixed(2)}`
+  
+
+}
+
+
 function upDateCartQuantity(){
   let cartQuantity=0;
   cart.forEach((item) =>{
@@ -10,6 +57,8 @@ function upDateCartQuantity(){
   
 }
 
+
+summary();
 upDateCartQuantity();
 
 
@@ -119,6 +168,7 @@ document.querySelectorAll('.js-delete-link')
     const container = document.querySelector(`.js-cart-item-container-${productId}`);
     container.remove();
     upDateCartQuantity();
+    summary();
 
 
   });
@@ -126,16 +176,12 @@ document.querySelectorAll('.js-delete-link')
 });
 
 
-function Update(){
-document.querySelector('.js-update').innerHTML =
-`<input> <button>save</button>`;
-}
 
-document.querySelectorAll('.js-update').
-forEach((update) =>{
-  update.addEventListener("click", ()=>{
-    document.querySelector('.js-update').innerHTML =
-    `<input> <button>save</button>`;
-  });
 
-});
+
+
+
+  
+
+    
+
